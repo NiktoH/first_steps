@@ -1,14 +1,16 @@
 from abc import ABC, abstractmethod
+from typing import Union
+import math
 
 #Абстрактный класс
 
 class Shape(ABC):
     @abstractmethod
-    def area(self) -> any:
+    def area(self) -> Union[int, float]:
         pass
 
     @abstractmethod
-    def perimetr(self) -> any:
+    def perimetr(self) -> Union[int, float]:
         pass
 
 #Класс прямоугольника
@@ -16,7 +18,7 @@ class Rectangle(Shape):
     #Кол-во прямоугольников
     _count: int = 0
 
-    def __init__(self, width: any, height: any):
+    def __init__(self, width: Union[int, float], height: Union[int, float]):
         self._width = width
         self._height = height
         Rectangle._count += 1
@@ -25,22 +27,22 @@ class Rectangle(Shape):
     def get_count() -> int:
         return Rectangle._count
 
-    def area(self) -> any:
+    def area(self) -> Union[int, float]:
         return self._width * self._height
 
-    def perimetr(self) -> any:
+    def perimetr(self) -> Union[int, float]:
         return 2 * (self._width + self._height)
 
 #Класс квадрата и конструктор родительского класса
 class Square(Rectangle):
-    def __init__(self, side):
+    def __init__(self, side: Union[int, float]):
         super().__init__(side, side)
 
 #Класс круга
 class Circle(Shape):
     _count: int = 0
 
-    def __init__(self, radius: any):
+    def __init__(self, radius: Union[int, float]):
         self._radius = radius
         Circle._count += 1
 
@@ -49,7 +51,7 @@ class Circle(Shape):
         return Circle._count
 
     def area(self):
-        return 3.14 * (self._radius ** 2)
+        return math.pi * (self._radius ** 2)
 
     def perimetr(self):
         return 2 * 3.14 * self._radius
