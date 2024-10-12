@@ -68,5 +68,5 @@ if __name__ == "__main__":
     for shape in shapes:
         print(f"Фигура: {type(shape).__name__}, Площадь: {shape.area()}, Периметр: {shape.perimetr()}")
 
-    print(f"Всего прямоугольников: {Rectangle.get_count()}")
-    print(f"Всего кругов: {Circle.get_count()}")
+    print(f"Всего прямоугольников: {shape.get_count()}")
+    print(f"Всего кругов: {shape.get_count()}")
