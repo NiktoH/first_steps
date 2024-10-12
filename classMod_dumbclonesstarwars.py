@@ -19,8 +19,8 @@ class Rectangle(Shape):
     _count: int = 0
 
     def __init__(self, width: Union[int, float], height: Union[int, float]):
-        self._width = width
-        self._height = height
+        self._width: Union[int, float] = width
+        self._height: Union[int, float] = height
         Rectangle._count += 1
 
     @staticmethod
