@@ -1,8 +1,8 @@
-from abc import ABC, abstractmethod
-from typing import Union
 import math
 
-#Абстрактный класс
+from typing import Union
+from abc import ABC, abstractmethod
+
 
 class Shape(ABC):
     @abstractmethod
@@ -13,18 +13,18 @@ class Shape(ABC):
     def perimetr(self) -> Union[int, float]:
         pass
 
-#Класс прямоугольника
+
 class Rectangle(Shape):
-    #Кол-во прямоугольников
     _count: int = 0
 
-    def __init__(self, width: Union[int, float], height: Union[int, float]):
+    def __init__(self, width: Union[int, float],
+                 height: Union[int, float]):
         self._width: Union[int, float] = width
         self._height: Union[int, float] = height
         Rectangle._count += 1
 
     @staticmethod
-    def get_count() -> int:
+    def get_count(self) -> int:
         return Rectangle._count
 
     def area(self) -> Union[int, float]:
@@ -33,12 +33,16 @@ class Rectangle(Shape):
     def perimetr(self) -> Union[int, float]:
         return 2 * (self._width + self._height)
 
-#Класс квадрата и конструктор родительского класса
+    count = property(get_count)
+    sarea = property(area)
+    sperimetr = property(perimetr)
+
+
 class Square(Rectangle):
     def __init__(self, side: Union[int, float]):
         super().__init__(side, side)
 
-#Класс круга
+
 class Circle(Shape):
     _count: int = 0
 
@@ -47,14 +51,19 @@ class Circle(Shape):
         Circle._count += 1
 
     @staticmethod
-    def get_count():
+    def get_count(self):
         return Circle._count
 
     def area(self):
         return math.pi * (self._radius ** 2)
 
     def perimetr(self):
-        return 2 * 3.14 * self._radius
+        return 2 * math.pi * self._radius
+
+    count = property(get_count)
+    sarea = property(area)
+    sperimetr = property(perimetr)
+
 
 if __name__ == "__main__":
     shapes = [
@@ -64,9 +73,10 @@ if __name__ == "__main__":
         Rectangle(6, 7)
     ]
 
-    #Вывод информации о фигурах
-    for shape in shapes:
-        print(f"Фигура: {type(shape).__name__}, Площадь: {shape.area()}, Периметр: {shape.perimetr()}")
 
-    print(f"Всего прямоугольников: {shape.get_count()}")
-    print(f"Всего кругов: {shape.get_count()}")
+    for shape in shapes:
+        print(f"Фигура: {type(shape).__name__}, Площадь: {shape.sarea}, Периметр: {shape.sperimetr}")
+
+
+    print(f"Всего прямоугольников: {shape.count}")
+    print(f"Всего кругов: {shape.count}")
