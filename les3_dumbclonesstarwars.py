@@ -1,12 +1,15 @@
 import json
 import csv
-from io import TextIOWrapper
-
-with open("in.json", "r") as in_file:
-    data: str = json.load(in_file)
+from typing import Dict, List, Generator
 
 
-def filtration(data) -> str:
+def read_json_file() -> List[Dict]:
+    with open("in.json", "r") as in_file:
+        data = json.load(in_file)
+    return data
+
+
+def filtration_users(data: List[Dict]) -> Generator[Dict[str, str], None, None]:
     for entry in data:
         phone: str = entry.get('phoneNumber', '')
         user_agent: str = entry.get('userAgent', '')
@@ -18,15 +21,15 @@ def filtration(data) -> str:
             }
 
 
-def writer() -> str:
+def write_to_csv_file() -> None:
     with open("out.csv", "w", newline='') as out_file:
-        fieldnames: list[str] = ['name', 'address', 'email']
-        writer: str = csv.DictWriter(out_file, fieldnames=fieldnames)
+        fieldnames: List[str] = ['name', 'address', 'email']
+        writer: Dict[str] = csv.DictWriter(out_file, fieldnames=fieldnames)
 
         writer.writeheader()
-        for item in filtration(data):
+        for item in filtration_users(read_json_file()):
             writer.writerow(item)
 
 
-filtration(data)
-writer()
+filtration_users(read_json_file())
+write_to_csv_file()
