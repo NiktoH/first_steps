@@ -24,7 +24,7 @@ def filtration_users(data: List[Dict]) -> Generator[Dict[str, str], None, None]:
 def write_to_csv_file() -> None:
     with open("out.csv", "w", newline='') as out_file:
         fieldnames: List[str] = ['name', 'address', 'email']
-        writer: Dict[str] = csv.DictWriter(out_file, fieldnames=fieldnames)
+        writer: str = csv.DictWriter(out_file, fieldnames=fieldnames)
 
         writer.writeheader()
         for item in filtration_users(read_json_file()):
